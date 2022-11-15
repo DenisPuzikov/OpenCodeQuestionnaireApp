@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class AnswerService {
 
     private final AnswersRepository answersRepository;
@@ -25,12 +24,10 @@ public class AnswerService {
         return foundAnswer.orElse(null);
     }
 
-    @Transactional
     public void addNewAnswer(Answer answer){
         answersRepository.save(answer);
     }
 
-    @Transactional
     public void editAnswer(long answerId, Answer answer){
         Answer answerToEdit = answersRepository.findById(answerId).orElseGet(Answer::new);
         if (answerToEdit != null){
@@ -39,7 +36,6 @@ public class AnswerService {
         answersRepository.save(answerToEdit);
     }
 
-    @Transactional
     public void deleteById(long answerId){
         answersRepository.deleteById(answerId);
     }

@@ -32,13 +32,11 @@ public class UserViewController {
 
     @PostMapping("/surveys/{id}")
     public void saveUserAnswer(@PathVariable("id") Long surveyId,
-                               @AuthenticationPrincipal User currentUser,
-                               User user) {
+                               @AuthenticationPrincipal User currentUser, List<Answer> answers) {
         Survey surveyFromDb = surveyService.findById(surveyId);
         String username = userService.loadUserByUsername(currentUser.getUsername()).getUsername();
-        List<Answer> newAnswers = user.getAnswers();
 
-        userService.updateAnswers(username, newAnswers);
+        userService.updateAnswers(username, answers);
         userService.addCompletedSurvey(username, surveyFromDb);
     }
 }

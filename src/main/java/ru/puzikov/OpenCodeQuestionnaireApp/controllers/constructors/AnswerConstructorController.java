@@ -25,7 +25,7 @@ public class AnswerConstructorController {
         return answerService.findAllByQuestionId(questionId);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Answer getAnswerById(@PathVariable("id") long answerId) {
         return answerService.findByAnswerId(answerId);
     }
@@ -43,7 +43,7 @@ public class AnswerConstructorController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("edit/{id}")
+    @PutMapping("/edit/{id}")
     public void editAnswer(@PathVariable("id") long answerId, Answer answer) {
         answerService.editAnswer(answerId, answer);
     }

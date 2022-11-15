@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.puzikov.OpenCodeQuestionnaireApp.models.Survey;
 import ru.puzikov.OpenCodeQuestionnaireApp.models.security.User;
@@ -14,12 +15,13 @@ import java.util.List;
 @RestController
 @PreAuthorize("hasAuthority('ADMIN')")
 @RequiredArgsConstructor
-@RequestMapping("/constructor/survey")
+@RequestMapping("/constructor/surveys")
 public class SurveyConstructorController {
 
     private final SurveyService surveyService;
 
-    @GetMapping("/all")
+
+    @GetMapping()
     public List<Survey> getAllSurveys() {
         return surveyService.findAll();
     }

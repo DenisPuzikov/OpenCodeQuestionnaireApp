@@ -16,11 +16,11 @@ public class QuestionService {
 
     private final QuestionsRepository questionsRepository;
 
-    public List<Question> findAllBySurveyId(long surveyId){
+    public List<Question> findAllBySurveyId(Long surveyId){
         return questionsRepository.findAllBySurveyId(surveyId);
     }
 
-    public Question findByQuestionId(long questionId){
+    public Question findByQuestionId(Long questionId){
         Optional<Question> foundQuestion = questionsRepository.findById(questionId);
         return foundQuestion.orElse(null);
     }
@@ -31,12 +31,12 @@ public class QuestionService {
     }
 
     @Transactional
-    public void deleteById(long questionId){
+    public void deleteById(Long questionId){
         questionsRepository.deleteById(questionId);
     }
 
     @Transactional
-    public void editQuestion(long questionId, Question question){
+    public void editQuestion(Long questionId, Question question){
         Question editedQuestion = questionsRepository.findById(questionId).orElseGet(Question::new);
         if (editedQuestion != null){
             editedQuestion.setCondition(question.getCondition());

@@ -21,7 +21,7 @@ public class SurveyService {
         return surveysRepository.findAll();
     }
 
-    public Survey findById(long id) {
+    public Survey findById(Long id) {
         return surveysRepository.findById(id).get();
     }
 
@@ -31,7 +31,7 @@ public class SurveyService {
     }
 
     @Transactional
-    public void editSurvey(long surveyId, Survey survey){
+    public void editSurvey(Long surveyId, Survey survey){
         Survey surveyToEdit = surveysRepository.findById(surveyId).orElseGet(Survey::new);
         if (surveyToEdit != null){
             surveyToEdit.setTitle(survey.getTitle());
@@ -44,7 +44,7 @@ public class SurveyService {
         surveysRepository.deleteById(surveyId);
     }
 
-    public List<Survey> findAllCompletedOfSurvey(long surveyId) {
+    public List<Survey> findAllCompletedOfSurvey(Long surveyId) {
         Survey survey = surveysRepository.findById(surveyId).get();
         List<User> respondentsOfSurvey = survey.getRespondents();
 

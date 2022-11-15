@@ -24,7 +24,6 @@ public class UserViewController {
         return surveyService.findAll();
     }
 
-
     @GetMapping("/surveys/{id}")
     public Survey getSurveyById(@PathVariable("id") Long surveyId) {
         return surveyService.findById(surveyId);

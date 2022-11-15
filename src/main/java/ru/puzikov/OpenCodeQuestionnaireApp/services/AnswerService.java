@@ -15,11 +15,11 @@ public class AnswerService {
 
     private final AnswersRepository answersRepository;
 
-    public List<Answer> findAllByQuestionId(long questionId){
+    public List<Answer> findAllByQuestionId(Long questionId){
         return answersRepository.findAllByQuestionId(questionId);
     }
 
-    public Answer findByAnswerId(long answerId){
+    public Answer findByAnswerId(Long answerId){
         Optional<Answer> foundAnswer = answersRepository.findById(answerId);
         return foundAnswer.orElse(null);
     }
@@ -28,7 +28,7 @@ public class AnswerService {
         answersRepository.save(answer);
     }
 
-    public void editAnswer(long answerId, Answer answer){
+    public void editAnswer(Long answerId, Answer answer){
         Answer answerToEdit = answersRepository.findById(answerId).orElseGet(Answer::new);
         if (answerToEdit != null){
             answerToEdit.setContent(answer.getContent());
@@ -36,7 +36,7 @@ public class AnswerService {
         answersRepository.save(answerToEdit);
     }
 
-    public void deleteById(long answerId){
+    public void deleteById(Long answerId){
         answersRepository.deleteById(answerId);
     }
 

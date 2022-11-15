@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @PreAuthorize("hasAuthority('ADMIN')")
 @RequiredArgsConstructor
-@RequestMapping("/constructor/question")
+@RequestMapping("/constructor/questions")
 public class QuestionConstructorController {
 
     private final QuestionService questionService;
@@ -23,24 +23,28 @@ public class QuestionConstructorController {
 
 
     @GetMapping("/all/{id}")
-    public List<Question> getAllQuestionsOfSurvey(@PathVariable("id") long surveyId) {
+    public List<Question> getAllQuestionsOfSurvey(@PathVariable("id") Long surveyId) {
         return questionService.findAllBySurveyId(surveyId);
     }
 
     @GetMapping("/{id}")
-    public Question getQuestion(@PathVariable("id") long questionId) {
+    public Question getQuestion(@PathVariable("id") Long questionId) {
         return questionService.findByQuestionId(questionId);
     }
 
+    //добавлен параметр вопрос с несколькими ответами или нет
     @PostMapping("/new/{id}")
-    public void addNewQuestion(@PathVariable("id") long surveyId, Question question) {
+    public void addNewQuestion(@PathVariable("id") Long surveyId, Question question,
+                               @RequestParam(value = "is_multiple_choice") String checkBoxValue) {
         Survey currentSurvey = surveyService.findById(surveyId);
+
+        question.setMultipleChoice(checkBoxValue != null);
         question.setSurvey(currentSurvey);
         questionService.addNewQuestion(question);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable("id") long questionId) {
+    public ResponseEntity<Object> deleteById(@PathVariable("id") Long questionId) {
         questionService.deleteById(questionId);
         return ResponseEntity.ok().build();
     }

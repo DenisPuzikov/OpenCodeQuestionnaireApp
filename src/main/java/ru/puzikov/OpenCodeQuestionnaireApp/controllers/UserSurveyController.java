@@ -1,23 +1,27 @@
 package ru.puzikov.OpenCodeQuestionnaireApp.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ru.puzikov.OpenCodeQuestionnaireApp.models.Answer;
 import ru.puzikov.OpenCodeQuestionnaireApp.models.Survey;
 import ru.puzikov.OpenCodeQuestionnaireApp.models.security.User;
 import ru.puzikov.OpenCodeQuestionnaireApp.services.SurveyService;
-import ru.puzikov.OpenCodeQuestionnaireApp.services.UserService;
+import ru.puzikov.OpenCodeQuestionnaireApp.services.UserResultService;
 
 import java.util.List;
+import java.util.Map;
 
+@PreAuthorize("hasAuthority('USER')")
 @RestController
 @RequestMapping("/view")
 @RequiredArgsConstructor
-public class UserViewController {
+public class UserSurveyController {
 
     private final SurveyService surveyService;
-    private final UserService userService;
+
+    private final UserResultService userResultService;
 
     @GetMapping("/surveys")
     public List<Survey> getAllSurveys() {
@@ -29,13 +33,14 @@ public class UserViewController {
         return surveyService.findById(surveyId);
     }
 
-    @PostMapping("/surveys/{id}")
-    public void saveUserAnswer(@PathVariable("id") Long surveyId,
-                               @AuthenticationPrincipal User currentUser, List<Answer> answers) {
-        Survey surveyFromDb = surveyService.findById(surveyId);
-        String username = userService.loadUserByUsername(currentUser.getUsername()).getUsername();
+    @PostMapping("/surveys/{surveyId}")
+    public ResponseEntity<Void> saveUserAnswer(@PathVariable("surveyId") Long surveyId,
+                                         @AuthenticationPrincipal User currentUser,
+                                         @RequestBody Map<String, List<String>> answers) {
 
-        userService.updateAnswers(username, answers);
-        userService.addCompletedSurvey(username, surveyFromDb);
+        userResultService.saveUserAnswer(surveyId, currentUser, answers);
+        return ResponseEntity.ok().build();
+
+
     }
 }

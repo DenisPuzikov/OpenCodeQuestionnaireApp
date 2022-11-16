@@ -13,16 +13,11 @@ import java.util.List;
 @Table(name = "answer")
 public class Answer extends AbstractEntity{
 
-    @Column(name = "content")
-    private String content;
+    @Column(name = "answer_text")
+    private String answerText;
 
     @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_answers",
-            joinColumns = @JoinColumn(name = "answer_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id") )
-    private List<User> users;
 }

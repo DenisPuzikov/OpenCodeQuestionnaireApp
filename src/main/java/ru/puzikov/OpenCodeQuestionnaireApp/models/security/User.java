@@ -3,6 +3,7 @@ package ru.puzikov.OpenCodeQuestionnaireApp.models.security;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.puzikov.OpenCodeQuestionnaireApp.models.AbstractEntity;
@@ -10,10 +11,7 @@ import ru.puzikov.OpenCodeQuestionnaireApp.models.Answer;
 import ru.puzikov.OpenCodeQuestionnaireApp.models.Survey;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "survey_user")
@@ -34,17 +32,6 @@ public class User extends AbstractEntity implements UserDetails {
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Survey> createdSurveys;
-
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_completed_surveys",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "survey_id"))
-    private List<Survey> completedSurveys;
-
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_answers", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "answer_id"))
-    private List<Answer> answers;
 
     @Column(name = "account_non_locked")
     private boolean accountNonLocked;

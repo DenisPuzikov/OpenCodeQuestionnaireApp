@@ -38,7 +38,7 @@ public class RegistrationController {
     public String addUser(@ModelAttribute("userForm") @Valid User userForm,
                           BindingResult bindingResult,
                           Model model,
-                          @RequestParam(value = "admin") String checkboxValue) {
+                          @RequestParam(value = "admin", required = false) String checkboxValue) {
 
         if (checkboxValue != null) {
             userForm.setRoles(Collections.singleton(Role.ADMIN));

@@ -1,6 +1,7 @@
 package ru.puzikov.OpenCodeQuestionnaireApp.services;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,32 +12,25 @@ import org.springframework.stereotype.Service;
 import ru.puzikov.OpenCodeQuestionnaireApp.models.Answer;
 import ru.puzikov.OpenCodeQuestionnaireApp.models.Survey;
 import ru.puzikov.OpenCodeQuestionnaireApp.models.security.User;
-import ru.puzikov.OpenCodeQuestionnaireApp.repositories.UsersRepository;
+import ru.puzikov.OpenCodeQuestionnaireApp.repositories.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements UserDetailsService{
 
-    public static final int MAX_FAILED_ATTEMPTS = 5;
+    public static final int MAX_FAILED_ATTEMPTS = 3;
     private static final long LOCK_TIME = 60 * 1000;
-
-
     private final UsersRepository usersRepository;
-
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserService(UsersRepository usersRepository) {
-        this.usersRepository = usersRepository;
-    }
 
     @Autowired
     public void setPasswordEncoder(@Lazy PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = usersRepository.findByUsername(username);
@@ -59,28 +53,6 @@ public class UserService implements UserDetailsService{
         user.setAccountNonLocked(true);
         usersRepository.save(user);
         return true;
-    }
-
-    public void addCompletedSurvey(String username, Survey survey) {
-        User user = usersRepository.findByUsername(username);
-        user.getCompletedSurveys().add(survey);
-        usersRepository.save(user);
-    }
-
-    public void updateAnswers(String username, List<Answer> answers) {
-        User user = usersRepository.findByUsername(username);
-
-        answers.stream()
-                .findFirst()
-                .ifPresent(answer -> user.getAnswers().removeAll(answer.getQuestion().getAnswers()));
-        user.getAnswers().addAll(answers);
-
-        usersRepository.save(user);
-    }
-
-    public List<Survey> findAllCompletedSurveys(Long userId) {
-        User user = usersRepository.findById(userId).get();
-        return user.getCompletedSurveys();
     }
 
     public void increaseFailedAttempts(User user) {

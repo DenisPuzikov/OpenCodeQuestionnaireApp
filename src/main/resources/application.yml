@@ -2,6 +2,14 @@ server:
   port: 8080
 
 spring:
+  flyway:
+    locations: classpath:db/migration
+    password: password
+    schemas: app-db
+    url: jdbc:h2:mem:testdb
+    user: sa
+    enabled: false
+
   application:
     name: OpenCodeQuestionnaireApp
 

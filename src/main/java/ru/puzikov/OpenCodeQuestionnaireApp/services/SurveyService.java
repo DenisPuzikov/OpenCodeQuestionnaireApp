@@ -12,7 +12,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class SurveyService {
 
     private final SurveysRepository surveysRepository;
@@ -25,64 +24,16 @@ public class SurveyService {
         return surveysRepository.findById(id).get();
     }
 
-    @Transactional
     public void addNewSurvey(Survey survey){
         surveysRepository.save(survey);
     }
 
-    @Transactional
-    public void editSurvey(Long surveyId, Survey survey){
-        Survey surveyToEdit = surveysRepository.findById(surveyId).orElseGet(Survey::new);
-        if (surveyToEdit != null){
-            surveyToEdit.setTitle(survey.getTitle());
-        }
-        surveysRepository.save(surveyToEdit);
+    public void editSurvey(Survey survey){
+        surveysRepository.save(survey);
     }
 
-    @Transactional
-    public void delete(long surveyId){
+    public void delete(Long surveyId){
         surveysRepository.deleteById(surveyId);
     }
-
-    public List<Survey> findAllCompletedOfSurvey(Long surveyId) {
-        Survey survey = surveysRepository.findById(surveyId).get();
-        List<User> respondentsOfSurvey = survey.getRespondents();
-
-        List<Survey> completedSurveys = new ArrayList<>();
-
-        respondentsOfSurvey.forEach(
-                user -> {
-                    completedSurveys.addAll(user.getCompletedSurveys());
-        });
-        return completedSurveys;
-    }
-
-    public List<Survey> findAllCompleted() {
-        List<Survey> allSurveys = surveysRepository.findAll();
-        List<Survey> completedSurveys = new ArrayList<>();
-
-        allSurveys.forEach(
-                survey -> {
-                    List<User> respondentsOfSurvey = survey.getRespondents();
-                    respondentsOfSurvey.forEach(
-                            user -> {
-                                completedSurveys.addAll(user.getCompletedSurveys());
-            });
-        });
-        return completedSurveys;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

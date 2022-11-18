@@ -1,13 +1,18 @@
 package ru.puzikov.OpenCodeQuestionnaireApp.models;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 import ru.puzikov.OpenCodeQuestionnaireApp.models.security.User;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "survey")
 public class Survey extends AbstractEntity{
 
@@ -19,11 +24,19 @@ public class Survey extends AbstractEntity{
     private User author;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "survey")
+    @ToString.Exclude
     private List<Question> questions;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_completed_surveys",
-            joinColumns = @JoinColumn(name = "survey_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> respondents;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Survey survey = (Survey) o;
+        return getId() != null && Objects.equals(getId(), survey.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

@@ -4,8 +4,9 @@
     <title>Hello user</title>
 </head>
 <body>
-<h1 th:inline="text">Hello</h1>
+<h1 th:inline="text">App is working.</h1>
 
+<p><a th:href="@{http://localhost:8080/swagger-ui/}"> Swagger
 
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>

@@ -2,7 +2,6 @@ package ru.puzikov.OpenCodeQuestionnaireApp.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.puzikov.OpenCodeQuestionnaireApp.models.Survey;
 import ru.puzikov.OpenCodeQuestionnaireApp.models.UserResult;
 import ru.puzikov.OpenCodeQuestionnaireApp.models.security.User;
 import ru.puzikov.OpenCodeQuestionnaireApp.repositories.UserResultRepository;

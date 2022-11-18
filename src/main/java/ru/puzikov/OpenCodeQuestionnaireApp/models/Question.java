@@ -29,7 +29,6 @@ public class Question extends AbstractEntity{
     @Column(name = "is_multiple_choice")
     private boolean isMultipleChoice = false;
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

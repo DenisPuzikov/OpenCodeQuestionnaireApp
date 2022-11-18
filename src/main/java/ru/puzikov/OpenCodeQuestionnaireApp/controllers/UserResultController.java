@@ -24,7 +24,6 @@ public class UserResultController {
         return userResultService.findAll();
     }
 
-    // Опросники пройденные user-ом
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("/{userId}")
     public List<UserResult> findAllCompletedByUserId(@PathVariable("userId") Long userId) {

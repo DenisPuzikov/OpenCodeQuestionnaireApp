@@ -1,27 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/style.css" type="text/css">
+    <base href="/" />
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <title>Регистрация</title>
 </head>
 <body>
 
-Добавление нового пользователя
+<div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            <form class="login" th:method="POST" th:action="@{/registration}" th:object="${userForm}">
+                <div class="login__field">
+                    <label for="username"> Введите логин: </label>
+                    <input type="text" th:field="*{username}" id="username"/>
+                    <div style="color: red" th:if="${#fields.hasErrors('username')}"
+                         th:errors="*{username}"> Username error
+                    </div>
+                    <br/>
+                </div>
+                <div class="login__field">
+                    <label for="password"> Введите пароль: </label>
+                    <input type="password" th:field="*{password}" id="password"/>
+                    <div style="color: red" th:if="${#fields.hasErrors('password')}"
+                         th:errors="*{password}"> Password error
+                    </div>
+                    <br/>
+                </div>
+                <label for="admin"> Регистрация как админ? </label>
+                <input type="checkbox" id="admin" name="admin"/>
 
-<form th:method="POST" th:action="@{/registration}" th:object="${userForm}">
-    <label for="username"> Введите логин: </label>
-    <input type="text" th:field="*{username}" id="username"/>
-    <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"> Username error </div>
-    <br/>
-    <label for="password"> Введите пароль: </label>
-    <input type="password" th:field="*{password}" id="password"/>
-    <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"> Password error </div>
-    <br/>
-    <label for="admin"> Регистрация как админ? </label>
-    <input type="checkbox" id="admin" name="admin"/>
-
-    <input type="submit" value="Sign up!"/>
-</form>
+                <input type="submit" value="Sign up!"/>
+            </form>
+            <div class="social-login">
+                <h3>Регистрация в Questionnaire</h3>
+            </div>
+        </div>
+        <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

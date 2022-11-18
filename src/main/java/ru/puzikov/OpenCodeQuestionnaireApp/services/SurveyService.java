@@ -2,12 +2,9 @@ package ru.puzikov.OpenCodeQuestionnaireApp.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.puzikov.OpenCodeQuestionnaireApp.models.Survey;
-import ru.puzikov.OpenCodeQuestionnaireApp.models.security.User;
 import ru.puzikov.OpenCodeQuestionnaireApp.repositories.SurveysRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

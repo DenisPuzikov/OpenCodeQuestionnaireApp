@@ -1,29 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Вход</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>Страница входа</title>
 </head>
 <body>
-Страница входа
 
-<div>
-    <a href="/registration">Registration</a>
+<div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            <div th:if="${param.logout}">
+                Вы вышли из аккаунта.
+            </div>
+            <div>
+                Регистрация в приложении
+                <a href="/registration">Registration</a>
+            </div>
+            <div th:if="${param.error}">
+                <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+            </div>
+
+            <form class="login" th:action="@{/login}" method="post">
+                <div class="login__field">
+                    <div><label> Введите логин: <input type="text" name="username"/></label></div>
+                </div>
+                <div class="login__field">
+                    <div><label> Введите пароль: <input type="password" name="password"/> </label></div>
+                </div>
+                    <div><input type="submit" value="Войти"/></div>
+            </form>
+            <div class="social-login">
+                <h3>Вход в Questionnaire</h3>
+            </div>
+        </div>
+        <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+        </div>
+    </div>
 </div>
-
-<div th:if="${param.logout}">
-    Вы вышли из аккаунта.
-</div>
-
-<div th:if="${param.error}">
-    <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
-</div>
-
-<form th:action="@{/login}" method="post">
-    <div><label> Введите логин: <input type="text" name="username"/> </label></div>
-    <div><label> Введите пароль: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Войти"/></div>
-</form>
 
 </body>
 </html>

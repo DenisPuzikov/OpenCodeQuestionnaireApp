@@ -40,7 +40,5 @@ public class UserSurveyController {
 
         userResultService.saveUserAnswer(surveyId, currentUser, answers);
         return ResponseEntity.ok().build();
-
-
     }
 }

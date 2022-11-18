@@ -2,22 +2,14 @@ server:
   port: 8080
 
 spring:
-  flyway:
-    locations: classpath:db/migration
-    password: password
-    schemas: app-db
-    url: jdbc:h2:mem:testdb
-    user: sa
-    enabled: false
-
   application:
     name: OpenCodeQuestionnaireApp
 
   datasource:
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
     driver-class-name: org.h2.Driver
-    username: sa
-    password: password
+    username: dp
+    password:
 
   jpa:
     database: h2
@@ -26,8 +18,15 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: create-drop
-    defer-datasource-initialization: true
 
   h2:
     console:
       enabled: true
+
+  flyway:
+    url: jdbc:h2:mem:testdb
+    locations: classpath:db/migration
+    user: dp
+    password:
+    schemas: app-db
+    enabled: false

@@ -19,11 +19,6 @@ public class SurveyConstructorController {
 
     private final SurveyService surveyService;
 
-
-    /*
-    Действия: получить один/все, создать новый, редактировать, удалить
-    Опросник --> Survey
-     */
     @GetMapping("/survey/{id}")
     public Survey getOneSurvey(@PathVariable("id") Long surveyId){
         return surveyService.findById(surveyId);
@@ -47,11 +42,9 @@ public class SurveyConstructorController {
         return ResponseEntity.ok().build();
     }
 
-    //////// ТАКЖЕ ДЕЛАТЬ ВЕЗДЕ где VOID
     @DeleteMapping("/survey/{id}")
     public ResponseEntity<Object> deleteSurveyById(@PathVariable("id") Long surveyId) {
         surveyService.delete(surveyId);
         return ResponseEntity.ok().build();
     }
-
 }

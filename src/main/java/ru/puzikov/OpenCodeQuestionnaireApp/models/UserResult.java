@@ -23,15 +23,12 @@ import java.util.Objects;
 @AllArgsConstructor
 public class UserResult extends AbstractEntity{
 
-
     @Column
     private Long userId;
 
     @Column
     private Long surveyId;
 
-
-    //ключ текст вопроса - значение выбранный(ые) ответы
     @Type(type="json")
     @Column(columnDefinition = "json")
     @Basic
